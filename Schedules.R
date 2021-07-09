@@ -86,21 +86,18 @@ schedulesNew <- schedulesNew[with(schedulesNew, order(Date)), ] %>%
 
 
 IRLStartDate <- as.Date("2021/06/24")
-weekdays(as.Date(IRLStartDate))
-
-
 test <- list()
-
 for (x in 1:(length(schedules$day) +1 )) {
   #print(x)
   if(weekdays(as.Date(IRLStartDate)) == "Sunday"){
     #print(weekdays(as.Date(IRLStartDate)))
     IRLStartDate <- IRLStartDate + 1
     
-  } else {
-    test[[x]] <- paste(IRLStartDate, schedulesNew$Abbr.x[x], "@", schedulesNew$Abbr.y[x])
-    print(paste(schedulesNew$Abbr.x[x], "@", schedulesNew$Abbr.y[x]))
-    if(schedulesNew$IRLDay[x] == schedulesNew$IRLDay[x+1]){
+  } 
+  test[[x]] <- data.frame(IRLStartDate, schedulesNew$Date[x], schedulesNew$Abbr.x[x], schedulesNew$Abbr.y[x])
+    #test[[x]] <- paste(IRLStartDate, schedulesNew$Abbr.x[x], "@", schedulesNew$Abbr.y[x])
+    #print(paste(schedulesNew$Abbr.x[x], "@", schedulesNew$Abbr.y[x]))
+  if(schedulesNew$IRLDay[x] == schedulesNew$IRLDay[x+1]){
       
       x <- x + 1
     } else{
@@ -108,16 +105,8 @@ for (x in 1:(length(schedules$day) +1 )) {
       #test[[x]] <- paste(IRLStartDate)
       x <- x + 1
     }
-      
-    
-  }
-  
-  
   
 }
-
-
-
 finalSchedule <- do.call("rbind", test)
 
 
